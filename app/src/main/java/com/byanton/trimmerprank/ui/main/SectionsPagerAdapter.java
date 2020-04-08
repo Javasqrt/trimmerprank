@@ -9,6 +9,9 @@ import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentPagerAdapter;
 
 import com.byanton.trimmerprank.R;
+import com.byanton.trimmerprank.TrimmerOne;
+import com.byanton.trimmerprank.TrimmerThree;
+import com.byanton.trimmerprank.TrimmerTwo;
 
 /**
  * A [FragmentPagerAdapter] that returns a fragment corresponding to
@@ -27,16 +30,22 @@ public class SectionsPagerAdapter extends FragmentPagerAdapter {
 
     @Override
     public Fragment getItem(int position) {
-        // getItem is called to instantiate the fragment for the given page.
-        // Return a PlaceholderFragment (defined as a static inner class below).
-        return PlaceholderFragment.newInstance(position + 1);
+        Fragment fragment = null;
+        switch (position){
+            case 0:
+                fragment = new TrimmerOne();
+                break;
+            case 1:
+                fragment = new TrimmerTwo();
+                break;
+            case 2:
+                fragment = new TrimmerThree();
+                break;
+        }
+        return fragment;
+
     }
 
-    @Nullable
-    @Override
-    public CharSequence getPageTitle(int position) {
-        return mContext.getResources().getString(TAB_TITLES[position]);
-    }
 
     @Override
     public int getCount() {
