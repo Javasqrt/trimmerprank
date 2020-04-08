@@ -9,15 +9,15 @@
     <com.google.android.material.appbar.AppBarLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:padding="10dp"
         android:theme="@style/AppTheme.AppBarOverlay">
 
         <Button
             android:id="@+id/settingbtn"
             android:layout_width="35dp"
             android:layout_height="35dp"
-            android:gravity="center"
+            android:gravity="end"
             android:minHeight="?actionBarSize"
-            android:padding="@dimen/appbar_padding"
             android:background="@drawable/settingsimg"
             android:textAppearance="@style/TextAppearance.Widget.AppCompat.Toolbar.Title" />
 
