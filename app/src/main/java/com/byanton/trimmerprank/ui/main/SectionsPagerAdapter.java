@@ -2,13 +2,11 @@ package com.byanton.trimmerprank.ui.main;
 
 import android.content.Context;
 
-import androidx.annotation.Nullable;
-import androidx.annotation.StringRes;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentPagerAdapter;
 
-import com.byanton.trimmerprank.R;
+
 import com.byanton.trimmerprank.TrimmerOne;
 import com.byanton.trimmerprank.TrimmerThree;
 import com.byanton.trimmerprank.TrimmerTwo;
@@ -19,8 +17,7 @@ import com.byanton.trimmerprank.TrimmerTwo;
  */
 public class SectionsPagerAdapter extends FragmentPagerAdapter {
 
-    @StringRes
-    private static final int[] TAB_TITLES = new int[]{R.string.tab_text_1, R.string.tab_text_2};
+
     private final Context mContext;
 
     public SectionsPagerAdapter(Context context, FragmentManager fm) {

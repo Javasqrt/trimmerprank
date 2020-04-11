@@ -19,7 +19,7 @@ import android.widget.Button;
 
 import com.byanton.trimmerprank.ui.main.SectionsPagerAdapter;
 
-public class MainActivity extends AppCompatActivity {
+public class MainActivity extends AppCompatActivity{
     Button btnsetting;
     @Override
     protected void onCreate(Bundle savedInstanceState) {

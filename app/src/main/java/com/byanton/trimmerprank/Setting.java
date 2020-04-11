@@ -1,20 +1,20 @@
 package com.byanton.trimmerprank;
 
 
-import android.app.Dialog;
 import android.app.Notification;
 import android.app.NotificationChannel;
 import android.app.NotificationManager;
-import android.content.ClipData;
 import android.content.DialogInterface;
 import android.media.MediaPlayer;
+
 import android.os.Build;
 import android.os.Bundle;
+import android.os.Handler;
 import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
-import android.widget.ListView;
 import android.widget.Switch;
 
 import androidx.annotation.Nullable;
@@ -22,12 +22,19 @@ import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.NotificationCompat;
 
+
+
 public class Setting extends AppCompatActivity {
-    final int SOUND_ITEM = 1;
+    Handler mHandler;
+    int stopPosition = 5000;
+    public int position = 0;
     private static final String CHANNEL_1 = "channel1";
-    MediaPlayer sound1 , sound2, sound3, sound4, sound5, sound6;
+    MediaPlayer sounds;
+    MediaPlayer sound1, sound2, sound3, sound4, sound5, sound6;
     Button settsound;
     Switch notifigation;
+
+
 
 
     @Override
@@ -39,35 +46,68 @@ public class Setting extends AppCompatActivity {
         setContentView(R.layout.setting_layout);
         settsound = (Button) findViewById(R.id.btnsound);
         notifigation = (Switch) findViewById(R.id.switch1);
-        sound1 = MediaPlayer.create(this,R.raw.mashin_barber00);
-        sound2 = MediaPlayer.create(this,R.raw.mashin_barber11);
-        sound3 = MediaPlayer.create(this,R.raw.mashin_barber22);
-        sound4 = MediaPlayer.create(this,R.raw.mashin_barber33);
-        sound5 = MediaPlayer.create(this,R.raw.mashin_barber44);
-        sound6 = MediaPlayer.create(this,R.raw.mashin_barber66);
+        sound1 = MediaPlayer.create(this, R.raw.mashin_barber00);
+        sound2 = MediaPlayer.create(this, R.raw.mashin_barber11);
+        sound3 = MediaPlayer.create(this, R.raw.mashin_barber22);
+        sound4 = MediaPlayer.create(this, R.raw.mashin_barber33);
+        sound5 = MediaPlayer.create(this, R.raw.mashin_barber44);
+        sound6 = MediaPlayer.create(this, R.raw.mashin_barber66);
+        mHandler = new Handler();
         assert getSupportActionBar() != null;
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-
-
+        final ArrayAdapter<String> arrayAdapter = new ArrayAdapter<String>(Setting.this, android.R.layout.select_dialog_singlechoice);
+        arrayAdapter.add("Sound 1");
+        arrayAdapter.add("Sound 2");
+        arrayAdapter.add("Sound 3");
+        arrayAdapter.add("Sound 4");
+        arrayAdapter.add("Sound 5");
+        arrayAdapter.add("Sound 6");
 
         settsound.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
 
-                AlertDialog.Builder alrt_bulder = new AlertDialog.Builder(Setting.this);
-                alrt_bulder
-                        .setMessage("Test sound choose")
-                        .setCancelable(false)
+                final AlertDialog.Builder alrt_bulder = new AlertDialog.Builder(Setting.this);
+                alrt_bulder.setSingleChoiceItems(arrayAdapter, position, new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        position = which;
+                        switch (which) {
+                            case 0:
+                                soundPlay(sound1);
+                                break;
+
+                            case 1:
+                                soundPlay(sound2);
+                                break;
+
+                            case 2:
+                                soundPlay(sound3);
+                                break;
+
+                            case 3:
+                                soundPlay(sound4);
+                                break;
+
+                            case 4:
+                                soundPlay(sound5);
+                                break;
+
+                            case 5:
+                                soundPlay(sound6);
+                                break;
+
+
+                        }
+
+
+                    }
+                })
+                        .setCancelable(true)
                         .setPositiveButton("Выбор", new DialogInterface.OnClickListener() {
                             @Override
                             public void onClick(DialogInterface dialog, int which) {
-                                dialog.cancel();
-
-/*                              ClipData.Item currentItem = null;
-                                switch (which){
-                                    case 1:
-                                        currentItem = new
-                                }*/
+                                arrayAdapter.getItem(position);
 
 
                             }
@@ -75,18 +115,37 @@ public class Setting extends AppCompatActivity {
                         .setNegativeButton("Отмена", new DialogInterface.OnClickListener() {
                             @Override
                             public void onClick(DialogInterface dialog, int which) {
+                                dialog.dismiss();
                                 dialog.cancel();
                             }
                         });
                 AlertDialog alert = alrt_bulder.create();
-                alert.setTitle("Sound effects");
+                alert.setTitle("Звуковые эффекты");
                 alert.show();
+
             }
         });
 
 
-
     }
+
+    public void soundPlay(final MediaPlayer sounds) {
+        sounds.start();
+        sounds.setLooping(true);
+
+        final Runnable stopAction = new Runnable() {
+            @Override
+            public void run() {
+                sounds.stop();
+
+            }
+        };
+        mHandler.postDelayed(stopAction,stopPosition);
+    }
+
+
+
+
 
     @Override
     public boolean onSupportNavigateUp() {
