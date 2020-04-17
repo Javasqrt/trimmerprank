@@ -3,15 +3,9 @@ package com.byanton.trimmerprank;
 import android.content.Intent;
 import android.os.Bundle;
 
-import com.google.android.material.floatingactionbutton.FloatingActionButton;
-import com.google.android.material.snackbar.Snackbar;
-import com.google.android.material.tabs.TabLayout;
-
 import androidx.viewpager.widget.ViewPager;
 import androidx.appcompat.app.AppCompatActivity;
 
-import android.view.Menu;
-import android.view.MenuItem;
 import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
@@ -21,6 +15,7 @@ import com.byanton.trimmerprank.ui.main.SectionsPagerAdapter;
 
 public class MainActivity extends AppCompatActivity{
     Button btnsetting;
+    TrimmerOne trmone = new TrimmerOne();
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -41,6 +36,7 @@ public class MainActivity extends AppCompatActivity{
                 startActivity(intent);
             }
         });
+
 
     }
 }

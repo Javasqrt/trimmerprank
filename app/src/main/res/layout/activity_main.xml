@@ -14,9 +14,9 @@
 
         <Button
             android:id="@+id/settingbtn"
-            android:layout_width="35dp"
-            android:layout_height="35dp"
-            android:gravity="end"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:layout_gravity="right"
             android:minHeight="?actionBarSize"
             android:background="@drawable/settingsimg"
             android:textAppearance="@style/TextAppearance.Widget.AppCompat.Toolbar.Title" />
