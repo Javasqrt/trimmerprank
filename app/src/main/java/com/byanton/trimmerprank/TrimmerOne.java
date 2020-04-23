@@ -1,6 +1,7 @@
 package com.byanton.trimmerprank;
 
 
+
 import android.media.MediaPlayer;
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -11,14 +12,9 @@ import android.widget.ImageButton;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
-import androidx.viewpager.widget.ViewPager;
 
-import static android.content.Context.MODE_PRIVATE;
-import static com.byanton.trimmerprank.Setting.SHARED_PREF;
-import static com.byanton.trimmerprank.Setting.SOUND_POSITION;
 
 public class TrimmerOne extends Fragment {
-
     Setting stng = new Setting();
     ImageButton btnoff,btnon;
      MediaPlayer sound10,sound20,sound30,sound40,sound50,sound60;
@@ -42,9 +38,14 @@ public class TrimmerOne extends Fragment {
         return root;
     }
 
+
+
     @Override
-    public void onActivityCreated(@Nullable final Bundle savedInstanceState) {
+    public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
+
+
+
         btnoff.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -97,6 +98,12 @@ public class TrimmerOne extends Fragment {
 
 
     }
+
+    public void startPlaying(){
+        sounds.setLooping(true);
+        sounds.start();
+    }
+
     public void stopPlaying(){
         if(sounds.isLooping()){
             sounds.pause();

@@ -5,6 +5,7 @@ import android.app.Notification;
 import android.app.NotificationChannel;
 import android.app.NotificationManager;
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.media.MediaPlayer;
 
@@ -14,10 +15,12 @@ import android.os.Handler;
 import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.Switch;
 
+import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
@@ -28,21 +31,20 @@ import androidx.core.app.NotificationCompat;
 public class Setting extends AppCompatActivity {
     Handler mHandler;
     int stopPosition = 5000;
-    public int position;
+    public int position = 6
+
+            ;
     public static final String CHANNEL_1 = "channel1";
     public MediaPlayer sound1, sound2, sound3, sound4, sound5, sound6;
     public Button settsound;
     public Switch notifigation;
-    public static final String SHARED_PREF = "sharedPredf";
-    public static final String SOUND_POSITION = "soundPosition";
-    public static final String NOTIF_SWITCH = "notificationSwitch";
-    public int sp;
+
 
 
 
 
     @Override
-    protected void onCreate(@Nullable Bundle savedInstanceState) {
+    protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         requestWindowFeature(Window.FEATURE_NO_TITLE);
         getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,
@@ -94,14 +96,15 @@ public class Setting extends AppCompatActivity {
 
                             case 4:
                                 soundPlay(sound5);
-                                break;
 
+                                break;
                             case 5:
                                 soundPlay(sound6);
+
                                 break;
 
-
                         }
+
 
 
                     }
@@ -110,7 +113,8 @@ public class Setting extends AppCompatActivity {
                         .setPositiveButton(R.string.okay, new DialogInterface.OnClickListener() {
                             @Override
                             public void onClick(DialogInterface dialog, int which) {
-                                 arrayAdapter.getItem(position);
+                             arrayAdapter.getItem(position);
+
 
 
 
@@ -132,6 +136,8 @@ public class Setting extends AppCompatActivity {
 
 
     }
+
+
 
     public void soundPlay(final MediaPlayer sounds) {
         sounds.start();
@@ -161,6 +167,7 @@ public class Setting extends AppCompatActivity {
         createNotificationChannels();
         NotificationCompat.Builder builder =
                 new NotificationCompat.Builder(this, CHANNEL_1)
+                        .setContentText(String.valueOf(R.string.notification_message))
                         .setSmallIcon(R.mipmap.ic_launcher)
                         .setContentTitle("Trimmer Prank")
                         .setPriority(NotificationCompat.PRIORITY_HIGH)
@@ -184,14 +191,5 @@ public class Setting extends AppCompatActivity {
         }
 
     }
-
-
-    public void  savePosition(){
-        SharedPreferences sharedPreferences =  getSharedPreferences(SHARED_PREF,MODE_PRIVATE);
-        SharedPreferences.Editor editor = sharedPreferences.edit();
-        editor.putInt(SOUND_POSITION,position);
-        sp = sharedPreferences.getInt(SOUND_POSITION,0);
-    }
-
 
 }

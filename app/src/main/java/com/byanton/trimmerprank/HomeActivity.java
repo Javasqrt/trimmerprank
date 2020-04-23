@@ -6,20 +6,23 @@ import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
 import android.widget.Button;
+import android.widget.FrameLayout;
 
-import com.google.android.gms.ads.AdListener;
-import com.google.android.gms.ads.InterstitialAd;
+import android.widget.TextView;
+import com.google.android.gms.ads.AdLoader;
 
 import com.google.android.gms.ads.AdRequest;
 
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import com.google.android.gms.ads.MobileAds;
-import com.google.android.gms.ads.initialization.InitializationStatus;
-import com.google.android.gms.ads.initialization.OnInitializationCompleteListener;
-
+import com.google.android.gms.ads.NativeExpressAdView;
+import com.google.android.gms.ads.formats.MediaView;
+import com.google.android.gms.ads.formats.UnifiedNativeAd;
+import com.google.android.gms.ads.formats.UnifiedNativeAdView;
 public class HomeActivity extends AppCompatActivity {
-    public InterstitialAd mInterstitialAd;
+
+
     Button start;
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -28,26 +31,26 @@ public class HomeActivity extends AppCompatActivity {
         getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,
                 WindowManager.LayoutParams.FLAG_FULLSCREEN);
         setContentView(R.layout.home_activity);
+        MobileAds.initialize(this);
 
-        MobileAds.initialize(this, new OnInitializationCompleteListener() {
-            @Override
-            public void onInitializationComplete(InitializationStatus initializationStatus) {
-            }
-        });
+        AdLoader adLoader = new AdLoader.Builder(this,"ca-app-pub-3940256099942544/2247696110")
+                .forUnifiedNativeAd(new UnifiedNativeAd.OnUnifiedNativeAdLoadedListener() {
+                    @Override
+                    public void onUnifiedNativeAdLoaded(UnifiedNativeAd unifiedNativeAd) {
+                        UnifiedNativeAdView unifiedNativeAdView = (UnifiedNativeAdView) getLayoutInflater().inflate(R.layout.native_ads_view,null);
+                        mapUnifiedNativeAdToLayout(unifiedNativeAd,unifiedNativeAdView);
 
-        start = (Button) findViewById(R.id.startmain);
-        mInterstitialAd = new InterstitialAd(this);
-        mInterstitialAd.setAdUnitId("ca-app-pub-3940256099942544/1033173712");
-        mInterstitialAd.loadAd(new AdRequest.Builder().build());
-        mInterstitialAd.setAdListener(new AdListener(){
-            @Override
-            public void onAdLoaded() {
-                    if(mInterstitialAd.isLoaded()){
-                        mInterstitialAd.show();
+                        FrameLayout nativeadslayout = findViewById(R.id.native_ads_position);
+                        nativeadslayout.removeAllViews();
+                        nativeadslayout.addView(unifiedNativeAdView);
                     }
-            }
-        });
+                })
+                .build();
 
+        adLoader.loadAd(new AdRequest.Builder().build());
+        start = (Button) findViewById(R.id.startmain);
+        start.setVisibility(View.GONE);
+                start.setVisibility(View.VISIBLE);
 
         start.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -58,5 +61,32 @@ public class HomeActivity extends AppCompatActivity {
 
             }
         });
+
+    }
+    public void mapUnifiedNativeAdToLayout(UnifiedNativeAd adFormatGoogle, UnifiedNativeAdView adView){
+
+        adView.setMediaView((MediaView) adView.findViewById(R.id.native_media));
+        adView.setBodyView(adView.findViewById(R.id.native_tv));
+        adView.setCallToActionView(adView.findViewById(R.id.native_btn));
+            if(adFormatGoogle.getBody() == null){
+                adView.getBodyView().setVisibility(View.GONE);
+            }
+            else {
+                ((TextView)adView.getBodyView()).setText((adFormatGoogle.getBody()));
+            }
+            if (adFormatGoogle.getCallToAction() == null){
+                adView.getCallToActionView().setVisibility(View.GONE);
+            }
+            else{
+                ((Button)adView.getCallToActionView()).setText(adFormatGoogle.getCallToAction());
+            }
+            if(adFormatGoogle.getMediaContent() == null){
+                adView.getMediaView().setVisibility(View.GONE);
+            }
+            else{
+                adView.getMediaView().setMediaContent(adFormatGoogle.getMediaContent());
+            }
+            adView.setNativeAd(adFormatGoogle);
+
     }
 }

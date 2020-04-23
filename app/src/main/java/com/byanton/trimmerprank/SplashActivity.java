@@ -9,7 +9,13 @@ import android.widget.TextView;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.google.android.gms.ads.AdListener;
+import com.google.android.gms.ads.AdRequest;
+import com.google.android.gms.ads.InterstitialAd;
+
 public class SplashActivity extends AppCompatActivity {
+
+    public InterstitialAd mInterstitialAd;
     ProgressBar progressBar;
     TextView pbtext;
     @Override
@@ -19,17 +25,33 @@ public class SplashActivity extends AppCompatActivity {
         getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,
                 WindowManager.LayoutParams.FLAG_FULLSCREEN);
         setContentView(R.layout.splash_activity);
+               mInterstitialAd = new InterstitialAd(this);
+        mInterstitialAd.setAdUnitId("ca-app-pub-3940256099942544/1033173712");
+        mInterstitialAd.loadAd(new AdRequest.Builder().build());
+        mInterstitialAd.setAdListener(new AdListener(){
+            @Override
+            public void onAdLoaded() {
+                super.onAdLoaded();
+                if(mInterstitialAd.isLoaded()){
+                    mInterstitialAd.show();
+                }
+            }
+
+        });
+
 
         progressBar = (ProgressBar) findViewById(R.id.progressbar);
         pbtext = (TextView) findViewById(R.id.percentpb);
         progressBar.setMax(100);
         progressBar.setScaleY(3f);
         progressAnimation();
+
     }
+
 
     public void progressAnimation(){
         ProgressBarAnimation anim = new ProgressBarAnimation(this,progressBar,pbtext,0f,100f);
-        anim.setDuration(4000);
+        anim.setDuration(5000);
         progressBar.setAnimation(anim);
     }
 }

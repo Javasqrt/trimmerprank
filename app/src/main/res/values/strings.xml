@@ -6,4 +6,10 @@
     <string name="okay">OK</string>
     <string name="sound_of_trimmer">The sound of a hair clipper</string>
     <string name="notification">Quick notification</string>
+    <string name="rate_app">Rate the application</string>
+    <string name="thx_for_rate">Thank you for your feedback</string>
+    <string name="leave_feedback">Leave your feedback (optional)</string>
+    <string name="send">Send</string>
+    <string name="notification_message">THIS IS EXAMPLE MESSAGE,PLZ
+    IF YOU WANT TO CHANGE THIS, GO TO res >> string AND CHANGE THIS NOTIFICATION MESSAGE</string>
 </resources>
