@@ -1,5 +1,6 @@
 package com.byanton.trimmerprank;
 
+import android.content.DialogInterface;
 import android.os.Bundle;
 import android.view.Window;
 import android.view.WindowManager;
@@ -7,6 +8,7 @@ import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import androidx.annotation.Nullable;
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.google.android.gms.ads.AdListener;
@@ -40,6 +42,7 @@ public class SplashActivity extends AppCompatActivity {
         });
 
 
+
         progressBar = (ProgressBar) findViewById(R.id.progressbar);
         pbtext = (TextView) findViewById(R.id.percentpb);
         progressBar.setMax(100);
@@ -53,5 +56,27 @@ public class SplashActivity extends AppCompatActivity {
         ProgressBarAnimation anim = new ProgressBarAnimation(this,progressBar,pbtext,0f,100f);
         anim.setDuration(5000);
         progressBar.setAnimation(anim);
+    }
+
+    @Override
+    public void onBackPressed() {
+        AlertDialog.Builder builder = new AlertDialog.Builder(SplashActivity.this);
+        builder.setMessage("Do you wanna exit from this app?");
+        builder.setCancelable(true);
+        builder.setPositiveButton("Yes", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                finish();
+                System.exit(0);
+            }
+        });
+        builder.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                dialog.cancel();
+            }
+        });
+        AlertDialog alertDialog  = builder.create();
+        alertDialog.show();
     }
 }

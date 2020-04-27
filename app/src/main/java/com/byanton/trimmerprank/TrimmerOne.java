@@ -1,7 +1,6 @@
 package com.byanton.trimmerprank;
 
 
-
 import android.media.MediaPlayer;
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -14,12 +13,14 @@ import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
 
+
 public class TrimmerOne extends Fragment {
     Setting stng = new Setting();
+    MainActivity ma = new MainActivity();
+    public int a = ma.sp;
     ImageButton btnoff,btnon;
      MediaPlayer sound10,sound20,sound30,sound40,sound50,sound60;
     public MediaPlayer sounds;
-
 
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
@@ -33,8 +34,6 @@ public class TrimmerOne extends Fragment {
         sound50 = MediaPlayer.create(getContext(),R.raw.mashin_barber44);
         sound60 = MediaPlayer.create(getContext(),R.raw.mashin_barber66);
 
-
-
         return root;
     }
 
@@ -43,43 +42,45 @@ public class TrimmerOne extends Fragment {
     @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
-
-
-
         btnoff.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 btnoff.setVisibility(View.GONE);
                 btnon.setVisibility(View.VISIBLE);
-                int a = stng.position;
                 if (a == 0){
                     sounds = sound10;
                     sounds.setLooping(true);
                     sounds.start();
+                    return;
                 } else if (a == 1) {
                     sounds = sound20;
                     sounds.setLooping(true);
                     sounds.start();
+                    return;
                 }
                 else if (a == 2) {
                     sounds = sound30;
                     sounds.setLooping(true);
                     sounds.start();
+                    return;
                 }
                 else if (a == 3) {
                     sounds = sound40;
                     sounds.setLooping(true);
                     sounds.start();
+                    return;
                 }
                 else if (a == 4) {
                     sounds = sound50;
                     sounds.setLooping(true);
                     sounds.start();
+                    return;
                 }
                 else if (a == 5) {
                     sounds = sound60;
                     sounds.setLooping(true);
                     sounds.start();
+                    return;
                 }
 
             }
@@ -99,10 +100,7 @@ public class TrimmerOne extends Fragment {
 
     }
 
-    public void startPlaying(){
-        sounds.setLooping(true);
-        sounds.start();
-    }
+
 
     public void stopPlaying(){
         if(sounds.isLooping()){

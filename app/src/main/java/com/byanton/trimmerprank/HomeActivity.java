@@ -7,22 +7,21 @@ import android.view.Window;
 import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.FrameLayout;
-
 import android.widget.TextView;
 import com.google.android.gms.ads.AdLoader;
-
 import com.google.android.gms.ads.AdRequest;
-
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import com.google.android.gms.ads.MobileAds;
-import com.google.android.gms.ads.NativeExpressAdView;
 import com.google.android.gms.ads.formats.MediaView;
 import com.google.android.gms.ads.formats.UnifiedNativeAd;
 import com.google.android.gms.ads.formats.UnifiedNativeAdView;
+
+
+
+
+
 public class HomeActivity extends AppCompatActivity {
-
-
     Button start;
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -66,13 +65,13 @@ public class HomeActivity extends AppCompatActivity {
     public void mapUnifiedNativeAdToLayout(UnifiedNativeAd adFormatGoogle, UnifiedNativeAdView adView){
 
         adView.setMediaView((MediaView) adView.findViewById(R.id.native_media));
-        adView.setBodyView(adView.findViewById(R.id.native_tv));
+        adView.setHeadlineView(adView.findViewById(R.id.native_tv));
         adView.setCallToActionView(adView.findViewById(R.id.native_btn));
-            if(adFormatGoogle.getBody() == null){
-                adView.getBodyView().setVisibility(View.GONE);
+            if(adFormatGoogle.getHeadline() == null){
+                adView.getHeadlineView().setVisibility(View.GONE);
             }
             else {
-                ((TextView)adView.getBodyView()).setText((adFormatGoogle.getBody()));
+                ((TextView)adView.getHeadlineView()).setText((adFormatGoogle.getHeadline()));
             }
             if (adFormatGoogle.getCallToAction() == null){
                 adView.getCallToActionView().setVisibility(View.GONE);
@@ -89,4 +88,6 @@ public class HomeActivity extends AppCompatActivity {
             adView.setNativeAd(adFormatGoogle);
 
     }
+
+
 }

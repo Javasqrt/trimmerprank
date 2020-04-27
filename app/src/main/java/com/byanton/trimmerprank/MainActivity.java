@@ -1,5 +1,6 @@
 package com.byanton.trimmerprank;
 
+import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
@@ -23,6 +24,7 @@ import com.google.android.gms.ads.initialization.OnInitializationCompleteListene
 import com.byanton.trimmerprank.ui.main.SectionsPagerAdapter;
 
 public class MainActivity extends AppCompatActivity{
+    Setting stng = new Setting();
     public InterstitialAd mInterstitialAd;
     Button btnsetting;
     int delayTime = 10;
@@ -38,8 +40,6 @@ public class MainActivity extends AppCompatActivity{
         SectionsPagerAdapter sectionsPagerAdapter = new SectionsPagerAdapter(this, getSupportFragmentManager());
         ViewPager viewPager = findViewById(R.id.view_pager);
         viewPager.setAdapter(sectionsPagerAdapter);
-        Intent intent = getIntent();
-        sp = intent.getIntExtra("SoundPosition",0);
 
         btnsetting = (Button) findViewById(R.id.settingbtn);
         MobileAds.initialize(this, new OnInitializationCompleteListener() {
@@ -55,6 +55,8 @@ public class MainActivity extends AppCompatActivity{
                 mInterstitialAd.loadAd(new AdRequest.Builder().build());
             }
         }, delayTime * 1000);
+        SharedPreferences sharedPreferences = getSharedPreferences("Sharedpr",MODE_PRIVATE);
+        sp = sharedPreferences.getInt("Sound_position",stng.sound_position);
 
 
 

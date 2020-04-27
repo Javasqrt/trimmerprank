@@ -1,45 +1,36 @@
 package com.byanton.trimmerprank;
 
 
+import android.annotation.SuppressLint;
 import android.app.Notification;
 import android.app.NotificationChannel;
 import android.app.NotificationManager;
 import android.content.DialogInterface;
-import android.content.Intent;
 import android.content.SharedPreferences;
 import android.media.MediaPlayer;
-
 import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
 import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
-import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.Switch;
-
-import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.NotificationCompat;
 
 
-
 public class Setting extends AppCompatActivity {
     Handler mHandler;
     int stopPosition = 5000;
-    public int position = 6
-
-            ;
+    public int position;
     public static final String CHANNEL_1 = "channel1";
     public MediaPlayer sound1, sound2, sound3, sound4, sound5, sound6;
+    public int sound_position;
     public Button settsound;
     public Switch notifigation;
-
-
 
 
 
@@ -68,10 +59,11 @@ public class Setting extends AppCompatActivity {
         arrayAdapter.add("Sound 4");
         arrayAdapter.add("Sound 5");
         arrayAdapter.add("Sound 6");
+
+
         settsound.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
                 final AlertDialog.Builder alrt_bulder = new AlertDialog.Builder(Setting.this);
                 alrt_bulder.setSingleChoiceItems(arrayAdapter, position, new DialogInterface.OnClickListener() {
                     @Override
@@ -113,8 +105,7 @@ public class Setting extends AppCompatActivity {
                         .setPositiveButton(R.string.okay, new DialogInterface.OnClickListener() {
                             @Override
                             public void onClick(DialogInterface dialog, int which) {
-                             arrayAdapter.getItem(position);
-
+                            arrayAdapter.getItem(position);
 
 
 
@@ -136,6 +127,7 @@ public class Setting extends AppCompatActivity {
 
 
     }
+
 
 
 
@@ -191,5 +183,6 @@ public class Setting extends AppCompatActivity {
         }
 
     }
+
 
 }
