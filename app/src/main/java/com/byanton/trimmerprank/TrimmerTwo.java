@@ -100,7 +100,7 @@ public class TrimmerTwo extends Fragment {
 
 
         }
-        
+
     }
     @Override
     public void onPause() {

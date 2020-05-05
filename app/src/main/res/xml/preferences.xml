@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+    <ListPreference
+        android:defaultValue="Sound 1"
+        android:dialogTitle="@string/sound_effects"
+        android:entries="@array/sound_position"
+        android:entryValues="@array/sound_position"
+        android:key="sound_position"
+        android:summary="Sound 1"
+        android:title="@string/sound_of_trimmer" />
+    <SwitchPreference
+        android:defaultValue="true"
+        android:key="notification"
+        android:summary="@string/quick_notification"
+        android:title="@string/notification" />
+
+</PreferenceScreen>
