@@ -105,10 +105,12 @@ public class TrimmerThree extends Fragment {
         }
 
     }
+
     @Override
     public void onPause() {
         super.onPause();
-        stopPlaying();
+
     }
+
 
 }

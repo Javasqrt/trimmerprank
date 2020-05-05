@@ -110,8 +110,8 @@ public class TrimmerOne extends Fragment {
 
     @Override
     public void onPause() {
-        super.onPause();
-                stopPlaying();
+            super.onPause();
+
         }
 
 
