@@ -1,6 +1,7 @@
 package com.byanton.trimmerprank;
 
-
+import android.content.Intent;
+import android.content.SharedPreferences;
 import android.media.MediaPlayer;
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -8,22 +9,20 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageButton;
 
-import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
-
+import androidx.preference.PreferenceManager;
 
 
 public class TrimmerOne extends Fragment {
-    Setting stng = new Setting();
-    MainActivity ma = new MainActivity();
-    public int a = ma.sp;
+    MainActivity mainActivity = new MainActivity();
     ImageButton btnoff,btnon;
+    public String a;
      MediaPlayer sound10,sound20,sound30,sound40,sound50,sound60;
     public MediaPlayer sounds;
 
     @Override
-    public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
+    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View root = inflater.inflate(R.layout.fragment_trimmer_one, container, false);
         btnoff = (ImageButton) root.findViewById(R.id.btnoff);
         btnon = (ImageButton) root.findViewById(R.id.btnon);
@@ -33,7 +32,9 @@ public class TrimmerOne extends Fragment {
         sound40 = MediaPlayer.create(getContext(),R.raw.mashin_barber33);
         sound50 = MediaPlayer.create(getContext(),R.raw.mashin_barber44);
         sound60 = MediaPlayer.create(getContext(),R.raw.mashin_barber66);
+        SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(getActivity());
 
+        a = sharedPreferences.getString("sound_position","Sound 1");
         return root;
     }
 
@@ -42,47 +43,42 @@ public class TrimmerOne extends Fragment {
     @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
+
+
         btnoff.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 btnoff.setVisibility(View.GONE);
                 btnon.setVisibility(View.VISIBLE);
-                if (a == 0){
-                    sounds = sound10;
-                    sounds.setLooping(true);
-                    sounds.start();
-                    return;
-                } else if (a == 1) {
-                    sounds = sound20;
-                    sounds.setLooping(true);
-                    sounds.start();
-                    return;
-                }
-                else if (a == 2) {
-                    sounds = sound30;
-                    sounds.setLooping(true);
-                    sounds.start();
-                    return;
-                }
-                else if (a == 3) {
-                    sounds = sound40;
-                    sounds.setLooping(true);
-                    sounds.start();
-                    return;
-                }
-                else if (a == 4) {
-                    sounds = sound50;
-                    sounds.setLooping(true);
-                    sounds.start();
-                    return;
-                }
-                else if (a == 5) {
-                    sounds = sound60;
-                    sounds.setLooping(true);
-                    sounds.start();
-                    return;
-                }
+                if (a != null) {
+                    if (a.equals("Sound 1")) {
+                        sounds = sound10;
+                        sounds.setLooping(true);
+                        sounds.start();
 
+                    } else if (a.equals("Sound 2")) {
+                        sounds = sound20;
+                        sounds.setLooping(true);
+                        sounds.start();
+                    } else if (a.equals("Sound 3")) {
+                        sounds = sound30;
+                        sounds.setLooping(true);
+                        sounds.start();
+                    } else if (a.equals("Sound 4")) {
+                        sounds = sound40;
+                        sounds.setLooping(true);
+                        sounds.start();
+                    } else if (a.equals("Sound 5")) {
+                        sounds = sound50;
+                        sounds.setLooping(true);
+                        sounds.start();
+                    } else if (a.equals("Sound 6")) {
+                        sounds = sound60;
+                        sounds.setLooping(true);
+                        sounds.start();
+                    }
+                    return;
+                }
             }
         });
         btnon.setOnClickListener(new View.OnClickListener() {
@@ -102,6 +98,7 @@ public class TrimmerOne extends Fragment {
 
 
 
+
     public void stopPlaying(){
         if(sounds.isLooping()){
             sounds.pause();
@@ -109,11 +106,13 @@ public class TrimmerOne extends Fragment {
 
 
         }
+    }
 
-
-
+    @Override
+    public void onPause() {
+        super.onPause();
+                stopPlaying();
+        }
 
 
     }
-
-}

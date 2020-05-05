@@ -1,6 +1,7 @@
 package com.byanton.trimmerprank;
 
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.Window;
 import android.view.WindowManager;
@@ -27,35 +28,22 @@ public class SplashActivity extends AppCompatActivity {
         getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,
                 WindowManager.LayoutParams.FLAG_FULLSCREEN);
         setContentView(R.layout.splash_activity);
-               mInterstitialAd = new InterstitialAd(this);
+        mInterstitialAd = new InterstitialAd(this);
         mInterstitialAd.setAdUnitId("ca-app-pub-3940256099942544/1033173712");
         mInterstitialAd.loadAd(new AdRequest.Builder().build());
-        mInterstitialAd.setAdListener(new AdListener(){
-            @Override
-            public void onAdLoaded() {
-                super.onAdLoaded();
-                if(mInterstitialAd.isLoaded()){
-                    mInterstitialAd.show();
-                }
-            }
-
-        });
-
-
-
+        mInterstitialAd.isLoading();
         progressBar = (ProgressBar) findViewById(R.id.progressbar);
         pbtext = (TextView) findViewById(R.id.percentpb);
         progressBar.setMax(100);
         progressBar.setScaleY(3f);
         progressAnimation();
-
     }
 
-
     public void progressAnimation(){
-        ProgressBarAnimation anim = new ProgressBarAnimation(this,progressBar,pbtext,0f,100f);
+        ProgressBarAnimation anim = new ProgressBarAnimation(this,progressBar,pbtext,0f,100f,mInterstitialAd);
         anim.setDuration(5000);
         progressBar.setAnimation(anim);
+
     }
 
     @Override

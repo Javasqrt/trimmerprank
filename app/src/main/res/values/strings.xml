@@ -5,11 +5,32 @@
     <string name="cancel">Cancel</string>
     <string name="okay">OK</string>
     <string name="sound_of_trimmer">The sound of a hair clipper</string>
-    <string name="notification">Quick notification</string>
+    <string name="quick_notification">Quick notification</string>
+    <string name="notification">Notification</string>
     <string name="rate_app">Rate the application</string>
     <string name="thx_for_rate">Thank you for your feedback</string>
     <string name="leave_feedback">Leave your feedback (optional)</string>
     <string name="send">Send</string>
     <string name="notification_message">THIS IS EXAMPLE MESSAGE,PLZ
     IF YOU WANT TO CHANGE THIS, GO TO res >> string AND CHANGE THIS NOTIFICATION MESSAGE</string>
+    <string name="share">Share</string>
+
+    <string-array name="sound_position">
+        <item>Sound 1</item>
+        <item>Sound 2</item>
+        <item>Sound 3</item>
+        <item>Sound 4</item>
+        <item>Sound 5</item>
+        <item>Sound 6</item>
+    </string-array>
+    <integer-array name="int_sound_position">
+        <item>1</item>
+        <item>2</item>
+        <item>3</item>
+        <item>4</item>
+        <item>5</item>
+        <item>6</item>
+    </integer-array>
+
+
 </resources>

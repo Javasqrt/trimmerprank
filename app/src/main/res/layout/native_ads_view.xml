@@ -42,8 +42,8 @@
 
         <com.google.android.gms.ads.formats.MediaView
             android:id="@+id/native_media"
-            android:layout_width="250dp"
-            android:layout_height="95dp"
+            android:layout_width="270dp"
+            android:layout_height="115dp"
             android:layout_gravity="center|top"
             android:layout_marginTop="25dp" />
 
