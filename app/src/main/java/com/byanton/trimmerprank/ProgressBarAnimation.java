@@ -6,8 +6,6 @@ import android.view.animation.Animation;
 import android.view.animation.Transformation;
 import android.widget.ProgressBar;
 import android.widget.TextView;
-
-import com.google.android.gms.ads.AdListener;
 import com.google.android.gms.ads.InterstitialAd;
 
 public class ProgressBarAnimation extends Animation {
@@ -36,30 +34,14 @@ public class ProgressBarAnimation extends Animation {
         pb.setProgress((int) value);
         pbtext.setText((int)value + "%");
 
-        if(value == to){
-            mInterstitialAd.setAdListener(new AdListener() {
-                @Override
-                public void onAdFailedToLoad(int i) {
-                    super.onAdFailedToLoad(i);
-                    context.startActivity(new Intent(context,HomeActivity.class));
-                }
+        if(value == to) {
 
-                @Override
-                public void onAdClosed() {
-                    super.onAdClosed();
+            if (!mInterstitialAd.isLoaded()) {
                     context.startActivity(new Intent(context,HomeActivity.class));
-                }
 
-                @Override
-                public void onAdLoaded() {
-                    super.onAdLoaded();
-                    if(mInterstitialAd.isLoaded()) {
-                        mInterstitialAd.show();
-                    }
-                }
-            });
+            }
+        }
 
 
         }
     }
-}

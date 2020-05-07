@@ -10,11 +10,8 @@ import android.os.Build;
 import android.os.Bundle;
 
 import androidx.core.app.NotificationCompat;
-import androidx.fragment.app.Fragment;
 import androidx.viewpager.widget.ViewPager;
 import androidx.appcompat.app.AppCompatActivity;
-
-import android.os.Handler;
 import android.preference.PreferenceManager;
 import android.view.View;
 import android.view.Window;
@@ -35,7 +32,6 @@ import static com.byanton.trimmerprank.Setting.CHANNEL_1;
 public class MainActivity extends AppCompatActivity{
     public InterstitialAd mInterstitialAd;
     Button btnsetting;
-    int delayTime = 180;
     MediaPlayer sound10,sound20,sound30,sound40,sound50,sound60;
     public String sound_position;
     public boolean notifigation;
@@ -69,12 +65,8 @@ public class MainActivity extends AppCompatActivity{
         });
         mInterstitialAd = new InterstitialAd(this);
         mInterstitialAd.setAdUnitId("ca-app-pub-3940256099942544/1033173712");
-        Handler handler = new Handler();
-        handler.postDelayed(new Runnable() {
-            public void run() {
-                mInterstitialAd.loadAd(new AdRequest.Builder().build());
-            }
-        }, delayTime * 1000);
+        mInterstitialAd.loadAd(new AdRequest.Builder().build());
+
         if(notifigation == true){
             addNotification();
         }
@@ -84,14 +76,6 @@ public class MainActivity extends AppCompatActivity{
 
 
                 mInterstitialAd.setAdListener(new AdListener(){
-                    @Override
-                    public void onAdClosed() {
-                        SharedPreferences shpr = getSharedPreferences("shpr", MODE_PRIVATE);
-                        boolean show = shpr.getBoolean("show", true);
-                        if (show) {
-                           startIntentPopUp();
-                        }
-                    }
 
                     @Override
                     public void onAdLoaded() {
@@ -114,14 +98,6 @@ public class MainActivity extends AppCompatActivity{
 
     }
 
-    private void startIntentPopUp() {
-        Intent intent = new Intent(MainActivity.this,PopUpRate.class);
-        startActivity(intent);
-        SharedPreferences shpr = getSharedPreferences("shpr",MODE_PRIVATE);
-        SharedPreferences.Editor editor = shpr.edit();
-        editor.putBoolean("show",false);
-        editor.apply();
-    }
     private void addNotification() {
         createNotificationChannels();
         NotificationCompat.Builder builder =

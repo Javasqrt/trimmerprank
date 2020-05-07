@@ -17,7 +17,6 @@ import com.google.android.gms.ads.AdRequest;
 import com.google.android.gms.ads.InterstitialAd;
 
 public class SplashActivity extends AppCompatActivity {
-
     public InterstitialAd mInterstitialAd;
     ProgressBar progressBar;
     TextView pbtext;
@@ -28,20 +27,17 @@ public class SplashActivity extends AppCompatActivity {
         getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,
                 WindowManager.LayoutParams.FLAG_FULLSCREEN);
         setContentView(R.layout.splash_activity);
-        mInterstitialAd = new InterstitialAd(this);
-        mInterstitialAd.setAdUnitId("ca-app-pub-3940256099942544/1033173712");
-        mInterstitialAd.loadAd(new AdRequest.Builder().build());
-        mInterstitialAd.isLoading();
         progressBar = (ProgressBar) findViewById(R.id.progressbar);
         pbtext = (TextView) findViewById(R.id.percentpb);
-        progressBar.setMax(100);
-        progressBar.setScaleY(3f);
-        progressAnimation();
+
     }
 
     public void progressAnimation(){
         ProgressBarAnimation anim = new ProgressBarAnimation(this,progressBar,pbtext,0f,100f,mInterstitialAd);
-        anim.setDuration(5000);
+        anim.setDuration(10000);
+        progressBar.setMax(100);
+        progressBar.setScaleY(3f);
+
         progressBar.setAnimation(anim);
 
     }
@@ -66,5 +62,35 @@ public class SplashActivity extends AppCompatActivity {
         });
         AlertDialog alertDialog  = builder.create();
         alertDialog.show();
+    }
+
+    @Override
+    protected void onPostCreate(@Nullable Bundle savedInstanceState) {
+        super.onPostCreate(savedInstanceState);
+        mInterstitialAd = new InterstitialAd(this);
+        mInterstitialAd.setAdUnitId("ca-app-pub-3940256099942544/1033173712");
+        mInterstitialAd.loadAd(new AdRequest.Builder().build());
+        progressAnimation();
+    }
+
+    @Override
+    protected void onPostResume() {
+        super.onPostResume();
+        mInterstitialAd.setAdListener(new AdListener() {
+            @Override
+            public void onAdClosed() {
+                super.onAdClosed();
+                startActivity(new Intent(SplashActivity.this,HomeActivity.class));
+            }
+
+            @Override
+            public void onAdLoaded() {
+                super.onAdLoaded();
+                if(mInterstitialAd.isLoaded()){
+                    mInterstitialAd.show();
+                }
+            }
+
+        });
     }
 }

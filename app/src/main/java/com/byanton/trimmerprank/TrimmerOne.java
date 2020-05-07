@@ -13,13 +13,23 @@ import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.preference.PreferenceManager;
 
+import com.google.android.gms.ads.AdListener;
+import com.google.android.gms.ads.AdRequest;
+import com.google.android.gms.ads.InterstitialAd;
+import com.google.android.gms.ads.MobileAds;
+import com.google.android.gms.ads.initialization.InitializationStatus;
+import com.google.android.gms.ads.initialization.OnInitializationCompleteListener;
+
+import static android.content.Context.MODE_PRIVATE;
+
 
 public class TrimmerOne extends Fragment {
-    MainActivity mainActivity = new MainActivity();
+    public InterstitialAd mInterstitialAd;
     ImageButton btnoff,btnon;
     public String a;
      MediaPlayer sound10,sound20,sound30,sound40,sound50,sound60;
     public MediaPlayer sounds;
+    boolean show;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -35,6 +45,8 @@ public class TrimmerOne extends Fragment {
         SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(getActivity());
 
         a = sharedPreferences.getString("sound_position","Sound 1");
+        SharedPreferences shpr = this.getActivity().getSharedPreferences("shpr",MODE_PRIVATE);
+        show = shpr.getBoolean("show",true);
         return root;
     }
 
@@ -43,7 +55,14 @@ public class TrimmerOne extends Fragment {
     @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
-
+        MobileAds.initialize(getContext(), new OnInitializationCompleteListener() {
+            @Override
+            public void onInitializationComplete(InitializationStatus initializationStatus) {
+            }
+        });
+        mInterstitialAd = new InterstitialAd(getContext());
+        mInterstitialAd.setAdUnitId("ca-app-pub-3940256099942544/1033173712");
+        mInterstitialAd.loadAd(new AdRequest.Builder().build());
 
         btnoff.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -86,6 +105,23 @@ public class TrimmerOne extends Fragment {
             public void onClick(View v) {
                 btnon.setVisibility(View.GONE);
                 btnoff.setVisibility(View.VISIBLE);
+                mInterstitialAd.setAdListener(new AdListener(){
+                    @Override
+                    public void onAdClosed() {
+                        if (show) {
+                            startIntentPopUp();
+                        }
+                        super.onAdClosed();
+                    }
+
+                    @Override
+                    public void onAdLoaded() {
+                        if(mInterstitialAd.isLoaded()){
+                            mInterstitialAd.show();
+                        }
+
+                    }
+                });
                 stopPlaying();
 
 
@@ -110,9 +146,22 @@ public class TrimmerOne extends Fragment {
 
     @Override
     public void onPause() {
+        if(btnon.getVisibility() == View.VISIBLE){
+            stopPlaying();
+        }
             super.onPause();
 
-        }
+
+
+    }
+    public void startIntentPopUp() {
+        Intent intent = new Intent(getContext(),PopUpRate.class);
+        startActivity(intent);
+        SharedPreferences shpr = this.getActivity().getSharedPreferences("shpr",MODE_PRIVATE);
+        SharedPreferences.Editor editor = shpr.edit();
+        editor.putBoolean("show",false);
+        editor.apply();
+    }
 
 
     }
